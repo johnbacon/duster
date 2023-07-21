@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae07b185c368b0c8c34b9b6402d818c0",
+    "content-hash": "1a27b003e02588cf747895f393e4fa6b",
     "packages": [],
     "packages-dev": [
         {
@@ -5027,16 +5027,16 @@
         },
         {
             "name": "tightenco/tlint",
-            "version": "v9.0.0",
+            "version": "v9.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tighten/tlint.git",
-                "reference": "b1d5c861e449651cf409fa26d9548000a8bd5dcc"
+                "url": "https://github.com/johnbacon/tlint.git",
+                "reference": "4422bfaec40f0ade5519efd9ff0e1be87b68e39b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/tlint/zipball/b1d5c861e449651cf409fa26d9548000a8bd5dcc",
-                "reference": "b1d5c861e449651cf409fa26d9548000a8bd5dcc",
+                "url": "https://api.github.com/repos/johnbacon/tlint/zipball/4422bfaec40f0ade5519efd9ff0e1be87b68e39b",
+                "reference": "4422bfaec40f0ade5519efd9ff0e1be87b68e39b",
                 "shasum": ""
             },
             "require": {
@@ -5061,7 +5061,28 @@
                     "Tighten\\TLint\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests/"
+                },
+                "exclude-from-classmap": [
+                    "tests/fixtures"
+                ]
+            },
+            "scripts": {
+                "update-fixture-app": [
+                    "rm -rf ./tests/fixtures/laravel",
+                    "composer create-project laravel/laravel ./tests/fixtures/laravel",
+                    "echo '{\"preset\":\"laravel\"}' > ./tests/fixtures/laravel/tlint.json",
+                    "rm -rf ./tests/fixtures/laravel/composer.lock"
+                ],
+                "lint": [
+                    "vendor/bin/duster lint"
+                ],
+                "fix": [
+                    "vendor/bin/duster fix"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5075,10 +5096,9 @@
             "description": "Tighten linter for Laravel conventions",
             "homepage": "https://github.com/tighten/tlint",
             "support": {
-                "issues": "https://github.com/tighten/tlint/issues",
-                "source": "https://github.com/tighten/tlint/tree/v9.0.0"
+                "source": "https://github.com/johnbacon/tlint/tree/v9.1.0"
             },
-            "time": "2023-07-11T04:38:34+00:00"
+            "time": "2023-08-02T14:22:37+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -31,6 +31,15 @@ trait ConfiguresForLintOrFix
                         mode: InputOption::VALUE_NONE,
                         description: 'Only lint/fix files that have uncommitted changes'
                     ),
+                    new InputOption(
+                        name: 'format',
+                        mode: InputOption::VALUE_REQUIRED,
+                        description: 'Whether to output results in a specific format (only checkstyle at the moment)',
+                        default: false,
+                        suggestedValues: [
+                            'checkstyle',
+                        ],
+                    ),
                 ]
             );
     }

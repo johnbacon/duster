@@ -25,6 +25,7 @@ class DusterServiceProvider extends ServiceProvider
             return new DusterConfig([
                 'paths' => Project::paths($input),
                 'using' => $input->getOption('using'),
+                'format' => $input->getOption('format'),
                 'mode' => $mode,
                 'include' => $dusterConfig['include'] ?? [],
                 'exclude' => $dusterConfig['exclude'] ?? [],

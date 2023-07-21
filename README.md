@@ -52,6 +52,12 @@ To dust only files that have uncommitted changes according to Git, you may use t
 ./vendor/bin/duster fix --dirty
 ```
 
+To return lint errors in checkstyle format, you may use the `--format` option:
+
+```bash
+./vendor/bin/duster lint --format=checkstyle
+```
+
 To view all available commands:
 
 ```bash

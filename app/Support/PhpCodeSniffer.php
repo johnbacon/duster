@@ -44,10 +44,16 @@ class PhpCodeSniffer extends Tool
             ? ['--ignore=' . implode(',', $this->dusterConfig->get('exclude'))]
             : [];
 
+        $format = [];
+        if ($this->dusterConfig->get('format') === 'checkstyle') {
+            $format = ['--report=checkstyle', '-q', '-vv'];
+        }
+
         $_SERVER['argv'] = [
             'Duster',
             '--standard=' . $this->getConfigFile(),
             ...$ignore,
+            ...$format,
             ...$params,
         ];
 

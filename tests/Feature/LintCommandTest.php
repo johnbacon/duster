@@ -32,6 +32,18 @@ it('lints with TLint when path contains space', function () {
         ->toContain('Put a space between blade control structure names and the opening paren:`@if(` -> `@if (`');
 });
 
+it('lints with TLint with checkstyle output', function () {
+    [$statusCode, $output] = run('lint', [
+        'path' => base_path('tests/Fixtures/TlintFixableIssues'),
+        '--format' => 'checkstyle',
+    ]);
+
+    expect($statusCode)->toBe(0)
+        ->and($output)
+        ->toContain('message="! Put a space between blade control structure names and the opening paren:`@if(`')
+        ->toContain('</checkstyle>');
+});
+
 it('only lints with TLint', function () {
     [$statusCode, $output] = run('lint', [
         'path' => base_path('tests/Fixtures/TlintFixableIssues'),
@@ -56,6 +68,18 @@ it('lints with PHP_CodeSniffer', function () {
         ->and($output)
         ->toContain('Linting using PHP_CodeSniffer')
         ->toContain('Class name doesn\'t match filename');
+});
+
+it('lints with PHP_CodeSniffer with checkstyle output', function () {
+    [$statusCode, $output] = run('lint', [
+        'path' => base_path('tests/Fixtures/PhpCodeSnifferFixableIssues'),
+        '--format' => 'checkstyle',
+    ]);
+
+    expect($statusCode)->toBe(1)
+        ->and($output)
+        ->toContain('message="Class name doesn\'t match filename;')
+        ->toContain('</checkstyle>');
 });
 
 it('only lints with PHP_CodeSniffer', function () {
@@ -84,6 +108,20 @@ it('lints with PHP CS Fixer', function () {
         ->toContain('Tighten/custom');
 });
 
+// TODO: Write JSON tests for all linters
+
+it('lints with PHP CS Fixer with checkstyle output', function () {
+    [$statusCode, $output] = run('lint', [
+        'path' => base_path('tests/Fixtures/PhpCsFixerFixableIssues'),
+        '--format' => 'checkstyle',
+    ]);
+
+    expect($statusCode)->toBe(1)
+        ->and($output)
+        ->toContain('message="Found violation(s) of type:')
+        ->toContain('</checkstyle>');
+});
+
 it('only lints with PHP CS Fixer', function () {
     [$statusCode, $output] = run('lint', [
         'path' => base_path('tests/Fixtures/PhpCsFixerFixableIssues'),
@@ -108,6 +146,18 @@ it('lints with Pint', function () {
         ->and($output)
         ->toContain('Linting using Pint')
         ->toContain('concat_space');
+});
+
+it('lints with Pint with checkstyle output', function () {
+    [$statusCode, $output] = run('lint', [
+        'path' => base_path('tests/Fixtures/PintFixableIssues'),
+        '--format' => 'checkstyle',
+    ]);
+
+    expect($statusCode)->toBe(1)
+        ->and($output)
+        ->toContain('message="Found violation(s) of type: concat_space')
+        ->toContain('</checkstyle>');
 });
 
 it('only lints with Pint', function () {

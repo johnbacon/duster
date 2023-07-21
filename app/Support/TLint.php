@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Exception;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\StringInput;
@@ -20,6 +21,10 @@ class TLint extends Tool
 
     public function fix(): int
     {
+        if ($this->dusterConfig->get('format') === 'checkstyle') {
+            throw new Exception('Checkstyle formatting is not supported with TLint fix mode.', 1);
+        }
+
         $this->heading('Fixing using TLint');
 
         return $this->process('format');
@@ -34,10 +39,15 @@ class TLint extends Tool
         $application->add($tlintCommand);
         $application->setAutoExit(false);
 
-        $success = collect($this->dusterConfig->get('paths'))->map(function ($path) use ($application, $command) {
+        $format = null;
+        if ($this->dusterConfig->get('format') === 'checkstyle') {
+            $format = '--checkstyle';
+        }
+
+        $success = collect($this->dusterConfig->get('paths'))->map(function ($path) use ($application, $command, $format) {
             $path = '"' . str_replace('\\', '\\\\', $path) . '"';
 
-            return $application->run(new StringInput("{$command} {$path}"), app()->get(OutputInterface::class));
+            return $application->run(new StringInput("{$command} {$format} {$path}"), app()->get(OutputInterface::class));
         })
             ->filter()
             ->isEmpty();
